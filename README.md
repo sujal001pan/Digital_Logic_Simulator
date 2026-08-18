@@ -19,10 +19,16 @@ You don't need to install SFML yourself. The project downloads and builds it aut
 Open a terminal in the project folder (where `CMakeLists.txt` lives) and run:
 
 ```
+cmake -S . -B build -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER="<full path to your msvcrt g++.exe>" -DCMAKE_C_COMPILER="<full path to your msvcrt gcc.exe>"
+cmake --build build
+```
+(make sure do as mention above if you have multiple compilers)
+
+If you just have MSVCRT one then you can just use:
+```
 cmake -S . -B build
 cmake --build build
 ```
-
 The first command sets things up and, the very first time, also downloads and compiles SFML from source — this can take a few minutes and might look like nothing's happening while it clones. That's normal, just let it finish. (personally it took me around 4 minutes of waiting)
 
 If CMake picks a generator that doesn't match your compiler (say, it wants Ninja but you've only got MinGW's make), tell it explicitly:
