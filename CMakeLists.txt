@@ -10,6 +10,30 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # -------------------------------------------------------
+# Guard against UCRT MinGW (incompatible with SFML's bundled libs)
+# -------------------------------------------------------
+if(MINGW)
+    include(CheckCXXSourceCompiles)
+    check_cxx_source_compiles("
+        #include <corecrt.h>
+        #ifdef _UCRT
+        #error UCRT_DETECTED
+        #endif
+        int main(){return 0;}
+    " DLS_COMPILER_IS_MSVCRT)
+
+    if(NOT DLS_COMPILER_IS_MSVCRT)
+        message(FATAL_ERROR
+            "\nThis project requires an MSVCRT-based MinGW-W64 compiler, not a UCRT one.\n"
+            "SFML's bundled prebuilt libraries (FreeType, libFLAC) are only compatible with MSVCRT.\n\n"
+            "Download an MSVCRT build from https://winlibs.com (look for 'msvcrt' in the filename).\n"
+            "Then re-run configure, specifying it explicitly:\n"
+            "  cmake -S . -B build -G \"MinGW Makefiles\" -DCMAKE_CXX_COMPILER=\"<path>/g++.exe\" -DCMAKE_C_COMPILER=\"<path>/gcc.exe\"\n"
+        )
+    endif()
+endif()
+
+# -------------------------------------------------------
 # Output Folder
 # -------------------------------------------------------
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -45,6 +69,13 @@ add_executable(${PROJECT_NAME}
     ${SOURCES}
     ${HEADERS}
 )
+
+# -------------------------------------------------------
+# Static-link the MinGW runtime (so the .exe runs without extra DLLs)
+# -------------------------------------------------------
+if(MINGW)
+    target_link_options(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++ -static -lpthread)
+endif()
 
 # -------------------------------------------------------
 # Include Directories
