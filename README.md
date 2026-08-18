@@ -23,7 +23,7 @@ cmake -S . -B build
 cmake --build build
 ```
 
-The first command sets things up and, the very first time, also downloads and compiles SFML from source — this can take a few minutes and might look like nothing's happening while it clones. That's normal, just let it finish.
+The first command sets things up and, the very first time, also downloads and compiles SFML from source — this can take a few minutes and might look like nothing's happening while it clones. That's normal, just let it finish. (personally it took me around 4 minutes of waiting)
 
 If CMake picks a generator that doesn't match your compiler (say, it wants Ninja but you've only got MinGW's make), tell it explicitly:
 
@@ -39,7 +39,7 @@ cmake -S . -B build -G "MinGW Makefiles"
 
 The font and other resources get copied next to the executable automatically as part of the build, so there's nothing extra to set up.
 
-## If something goes wrong
+## If something goes wrong (which probably will )
 
 **"Could not find a package configuration file for SFML"** — this shouldn't happen, since the project fetches SFML on its own rather than looking for an existing install. If you see it, something in `CMakeLists.txt` may have been changed.
 
