@@ -1,6 +1,6 @@
 # Digital Logic Simulator
 
-A desktop app for building and simulating digital logic circuits — place gates, wire them together, flip switches, and watch signals propagate in real time. Built with C++17 and SFML.
+A desktop app for building and simulating digital logic circuits — place gates, wire them together,  and watch signals propagate in real time.Enter an Boolean expression and generate it's Truth table, Kmap , SOP ,POS and Simplifies expression. Built with C++17 and SFML.
 
 ## What you'll need
 
@@ -72,3 +72,4 @@ Most of the simulation logic — gates, wires, circuit evaluation — lives in h
 ├── include/dls/    — shared type definitions
 └── resources/fonts/Inter-Regular.ttf
 ```
+# One thing I forgot to mention is that you can switch between the two windows (one where you can connect gates ,LED, wires and Switch and another is where you can enter an boolean expression and then generate the tables and simplified expression ) by pressing the "Tab" key.
